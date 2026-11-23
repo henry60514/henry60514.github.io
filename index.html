@@ -6,12 +6,255 @@
   <meta name="theme-color" content="#fffefb">
   <title>人生陪跑教練｜慢慢探索，走出自己的方向</title>
   <link rel="icon" href="data:,">
-  <script src="theme.js"></script>
+  <script>
+(function(root){
+  'use strict';
+  const KEY='life-coach-theme', valid=['system','light','dark'];
+  function read(storage){try{const v=storage.getItem(KEY);return valid.includes(v)?v:'system';}catch{return 'system';}}
+  function apply(pref,doc,media){const effective=pref==='system'?(media&&media.matches?'dark':'light'):pref;doc.documentElement.dataset.theme=effective;doc.documentElement.style.colorScheme=effective;const meta=doc.querySelector('meta[name="theme-color"]');if(meta)meta.content=effective==='dark'?'#18211e':'#fffefb';return effective;}
+  function init(win){let pref;try{pref=read(win.localStorage);}catch{pref='system';}let media=null;try{if(typeof win.matchMedia==='function')media=win.matchMedia('(prefers-color-scheme: dark)');}catch{}const update=()=>{if(pref==='system')apply(pref,win.document,media);};apply(pref,win.document,media);if(media){if(media.addEventListener)media.addEventListener('change',update);else if(media.addListener)media.addListener(update);}return {get preference(){return pref;},set(value){if(!valid.includes(value))return false;try{win.localStorage.setItem(KEY,value);}catch{}pref=value;apply(value,win.document,media);return true;}};}
+  root.CoachTheme={KEY,valid,read,apply,init};
+  if(typeof module!=='undefined')module.exports=root.CoachTheme;
+})(globalThis);
+
+</script>
   <script>window.coachTheme = window.CoachTheme.init(window)</script>
-  <link rel="stylesheet" href="styles.css">
-  <script defer src="data/paths.js"></script>
-  <script defer src="state.js"></script>
-  <script defer src="app.js"></script>
+  <style>
+:root{--bg:#f8f7f2;--paper:#fffefb;--ink:#243d34;--muted:#66766e;--green:#244c3e;--light:#eaf0e7;--line:#dedfd5;--orange:#b56c43;--radius:20px;font-family:"Microsoft JhengHei","PingFang TC",system-ui,sans-serif;color:var(--ink);background:var(--bg);font-size:16px;line-height:1.7}
+*{box-sizing:border-box}body{margin:0}button,input,textarea{font:inherit}button,a,input,textarea{touch-action:manipulation}button{cursor:pointer}a{color:inherit}button{border:0}button:disabled{cursor:not-allowed;opacity:.5}button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,[tabindex]:focus-visible{outline:3px solid #b97831;outline-offset:4px}[hidden]{display:none!important}.skip-link{position:absolute;left:16px;top:-70px;background:white;padding:12px;z-index:10}.skip-link:focus{top:10px}.site-header{height:100px;padding:0 5%;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line);background:var(--paper)}.brand{display:flex;align-items:center;gap:13px;text-decoration:none;font-weight:700;font-size:20px;letter-spacing:1px}.brand small{display:block;font-size:9px;letter-spacing:2.5px;font-weight:500;color:var(--muted);margin-top:1px}.brand-mark{width:43px;height:43px;background:var(--green);border-radius:50% 50% 8px 50%;color:#fff;display:grid;place-items:center;font-size:30px;font-weight:400}.header-actions{display:flex;align-items:center;gap:20px}.prototype-tag,.pill{display:inline-block;font-size:12px;padding:4px 12px;border-radius:30px;background:var(--light);color:var(--green)}.text-button{padding:5px 0;background:none;color:var(--muted);font-size:13px;text-decoration:underline;text-underline-offset:5px}.workspace{max-width:1440px;margin:auto;display:grid;grid-template-columns:270px minmax(0,1fr);min-height:calc(100vh - 177px)}.sidebar{padding:48px 28px 24px 42px;border-right:1px solid var(--line)}.eyebrow{font-size:11px;letter-spacing:2.2px;font-weight:700;color:var(--muted);margin:0 0 16px}.sidebar-title{font-size:22px;line-height:1.7;margin:0 0 37px;font-weight:500}.step{display:flex;width:100%;gap:13px;align-items:center;text-align:left;padding:12px 10px;margin:7px 0;border-radius:12px;background:none;color:var(--muted);font-size:14px}.step.active{background:var(--light);color:var(--green);font-weight:700}.step-num{border:1px solid #c6cfc1;border-radius:50%;width:28px;height:28px;display:grid;place-items:center;font-size:12px;flex-shrink:0}.active .step-num{background:var(--green);color:white;border-color:var(--green)}.sidebar-note{margin-top:62px;border-top:1px solid var(--line);padding-top:23px;color:var(--muted);font-size:12px}.sidebar-note>span{font-size:30px;color:#a0ab89}.sidebar-note p{margin-top:6px}main{padding:45px 5% 55px;min-width:0}.page-kicker{font-size:11px;letter-spacing:2.5px;color:var(--orange);font-weight:700;margin:0 0 12px}h1{font-size:clamp(30px,3.2vw,44px);line-height:1.4;letter-spacing:1px;font-weight:600;margin:0 0 20px}h2{font-size:22px;font-weight:600;margin:0 0 14px}h3{font-size:17px;margin:0 0 12px}p{margin:0 0 14px}.lede{color:var(--muted);font-size:15px;line-height:1.95;max-width:580px}.hero{display:grid;grid-template-columns:1.3fr 1fr;align-items:center;gap:24px;margin:6px 0 34px}.hero-copy{padding:17px 0}.hero h1 em{font-style:normal;color:#69865d}.hero-art{height:300px;position:relative;overflow:hidden;border-radius:150px 150px 12px 12px;background:#ecefdf;border:1px solid #e1e5d4}.art-sun{width:66px;height:66px;border-radius:50%;background:#d6ac6c;position:absolute;top:40px;right:42px}.art-hill{position:absolute;border-radius:50% 50% 0 0;width:300px;height:170px;bottom:-40px;left:-75px;background:#b9c6a5;transform:rotate(20deg)}.art-hill.two{left:90px;bottom:-30px;background:#68876d;transform:rotate(-30deg)}.art-path{position:absolute;width:90px;height:230px;border:18px solid #f7f3dc;border-top:0;border-bottom:0;transform:rotate(25deg);border-radius:50%;bottom:-100px;left:40%;z-index:2}.art-star{position:absolute;left:48px;top:68px;font-size:40px;color:#6a8565}.art-caption{position:absolute;top:144px;left:35px;font-size:10px;letter-spacing:3px;color:#536d55;transform:rotate(-8deg)}.primary,.secondary{border-radius:9px;padding:12px 22px;font-size:14px;display:inline-flex;align-items:center;justify-content:center;gap:20px;min-height:48px}.primary{background:var(--green);color:#fff}.primary:hover{background:#173c2e}.secondary{background:transparent;border:1px solid #bac7b9;color:var(--green)}.primary .arrow{font-size:20px}.hero .primary{margin-top:18px}.subtle{color:var(--muted);font-size:12px}.small-title{display:flex;align-items:center;gap:14px;margin-bottom:18px}.small-title h2{font-size:15px;margin:0}.small-title::after{content:"";height:1px;background:var(--line);flex:1}.journey-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;margin-bottom:24px}.journey-card{padding:23px 20px;border:1px solid var(--line);border-radius:14px;background:var(--paper)}.journey-card .icon{font-size:23px;color:#6d8661;margin-bottom:16px;display:block}.journey-card h3{font-size:15px;margin-bottom:7px}.journey-card p{color:var(--muted);font-size:12px;margin:0;line-height:1.9}.note{background:#edf0e7;padding:17px 21px;border-radius:12px;font-size:12px;color:#50614f;line-height:1.9}.note strong{font-weight:600}.card{padding:26px;background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);margin:22px 0}.card.tint{background:#f0f3e9}.section-top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:12px}.section-top h2{margin:0}.question{margin:23px 0 30px}.question-head{display:flex;justify-content:space-between;gap:12px;align-items:center}.question label{font-size:16px;font-weight:600}.question .hint{font-size:13px;color:var(--muted);margin:7px 0 10px}textarea,input[type=text]{display:block;width:100%;border:1px solid #cbd1c5;border-radius:10px;background:#fffefc;color:var(--ink);padding:13px 15px;resize:vertical}textarea{min-height:100px;line-height:1.8}textarea:focus,input:focus{border-color:var(--green)}label{display:block}.actions{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-top:23px}.actions.spread{justify-content:space-between}.error{color:#9f3f2c;background:#fff0e9;border-radius:10px;padding:14px 17px;font-size:14px;margin:16px 0}.success{color:#315c3c;background:#e6efdf;padding:10px 16px;border-radius:10px;font-size:14px}.status{font-size:13px;margin:12px 0;color:var(--orange)}#notice:empty{display:none}#notice:not(:empty){padding:12px 17px;margin-bottom:20px;border-left:3px solid var(--orange);background:#f4ecdf;font-size:14px}.clue{padding:17px 0;border-bottom:1px solid var(--line)}.clue:last-child{border-bottom:0}.clue label{font-size:13px;color:var(--muted);margin-bottom:7px}.clue textarea{min-height:80px}.check-line{display:flex;align-items:center;gap:10px;margin-top:10px;font-size:13px}input[type=checkbox],input[type=radio]{accent-color:var(--green);width:18px;height:18px;flex-shrink:0}.rejected{opacity:.65}.source-note{font-size:11px;color:var(--muted);margin-top:8px}.compare-scroll{overflow:auto;border:1px solid var(--line);border-radius:14px;margin:20px 0}.compare-table{width:100%;border-collapse:collapse;background:var(--paper);font-size:13px}.compare-table th,.compare-table td{padding:17px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line);width:40%;overflow-wrap:anywhere}.compare-table th:first-child,.compare-table td:first-child{width:20%;color:var(--muted);font-size:12px}.compare-table thead th{background:#eaf0e4;color:var(--green);font-size:17px}.compare-table tr:last-child td{border-bottom:0}.compare-table dl{margin:0}.compare-table dt{color:var(--muted);font-size:11px}.compare-table dd{margin:0 0 8px}.compare-table dd:last-child{margin:0}.line-list{padding-left:23px}.line-list li{padding:5px 0;white-space:pre-wrap;overflow-wrap:anywhere}.radio-card{display:flex;align-items:flex-start;gap:12px;border:1px solid var(--line);border-radius:12px;padding:16px;cursor:pointer;margin:12px 0}.radio-card:has(input:checked){border-color:var(--green);background:var(--light)}.radio-card strong{display:block;font-size:15px}.radio-card small{display:block;color:var(--muted);font-size:12px}.field{margin:19px 0}.field label{font-weight:600;margin-bottom:9px;font-size:14px}.pre-wrap{white-space:pre-wrap;overflow-wrap:anywhere}.output-heading{font-size:26px}.report-section{border-top:1px solid var(--line);padding-top:20px;margin-top:24px}.report-section h3{font-size:16px}.test-tools{border:1px dashed var(--orange);padding:15px;margin-top:25px;font-size:12px}footer{max-width:1440px;margin:auto;border-top:1px solid var(--line);padding:24px 5%;font-size:11px;color:var(--muted);display:flex;justify-content:space-between;gap:20px}
+@media(min-width:1450px){.workspace{grid-template-columns:290px minmax(0,1fr)}main{padding:50px 60px}.hero-art{height:330px}}
+@media(max-width:950px){.workspace{grid-template-columns:215px minmax(0,1fr)}.sidebar{padding:36px 18px}.hero{grid-template-columns:1fr}.hero-art{display:none}.sidebar-title{font-size:19px}.journey-grid{gap:9px}.journey-card{padding:17px 13px}}
+@media(max-width:650px){.site-header{height:83px;padding:0 18px}.brand{font-size:16px;gap:9px}.brand-mark{width:34px;height:34px;font-size:25px}.brand small{font-size:7px}.header-actions{gap:10px}.prototype-tag{display:none}.text-button{font-size:11px}.workspace{display:block}.sidebar{padding:18px;border-right:0;border-bottom:1px solid var(--line)}.sidebar>.eyebrow,.sidebar-title,.sidebar-note{display:none}#steps{display:grid;grid-template-columns:repeat(5,1fr);gap:4px}.step{display:flex;flex-direction:column;gap:7px;padding:8px 1px;margin:0;font-size:10px;white-space:nowrap}.step-num{width:25px;height:25px}main{padding:30px 20px 40px}.hero{margin-top:0;margin-bottom:27px;gap:0}.hero-copy{padding:0}.hero h1{font-size:32px}.lede{font-size:14px}.journey-grid{grid-template-columns:1fr;gap:10px}.journey-card{padding:18px;display:grid;grid-template-columns:28px 1fr;column-gap:14px}.journey-card .icon{grid-row:span 2;margin:0}.journey-card h3{margin:0 0 3px}.journey-card p{grid-column:2}.card{padding:20px 17px;border-radius:14px}.compare-table{min-width:570px}.section-top{align-items:flex-start}.section-top h2{font-size:19px}.actions.spread{justify-content:flex-start}.primary,.secondary{padding:11px 17px}footer{padding:23px 20px;display:block}footer span{display:block;margin-top:9px}h1{font-size:29px}.note{padding:15px}.question label{font-size:15px}}
+.hero-copy>.subtle{margin-top:10px}
+/* Theme tokens: component colors use semantic variables across both palettes. */
+:root{color-scheme:light;--muted:#596a61;--line:#c9cec2;--orange:#8a4825;--control:#fffefc;--note-bg:#edf0e7;--note-ink:#405440;--focus:#8a4c00;--error:#7e2b1c;--error-bg:#fff0e9;--success:#244a2e;--success-bg:#e6efdf}
+:root[data-theme=dark]{color-scheme:dark;--bg:#151c19;--paper:#202a25;--ink:#edf3ee;--muted:#bac8bf;--green:#b6d7bf;--light:#2b3a31;--line:#526158;--orange:#f0b58e;--control:#18211d;--note-bg:#29362e;--note-ink:#e0ebe2;--focus:#ffd18a;--error:#ffb4a7;--error-bg:#482b27;--success:#c0e7bd;--success-bg:#293b2c}
+body{background:var(--bg);color:var(--ink)}.hero h1 em,.art-star,.journey-card .icon{color:var(--green)}.hero-art{background:var(--light);border-color:var(--line)}.art-path{border-color:var(--paper)}.art-caption{color:var(--ink)}
+.note,.card.tint,#notice:not(:empty){background:var(--note-bg);color:var(--note-ink)}.error{color:var(--error);background:var(--error-bg)}.success{color:var(--success);background:var(--success-bg)}textarea,input[type=text],select{background:var(--control);color:var(--ink);border-color:var(--line)}.compare-table thead th{background:var(--light);color:var(--green)}
+button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible,[tabindex]:focus-visible{outline:3px solid var(--focus);outline-offset:3px}
+.theme-control{display:flex;align-items:center;gap:7px;font-size:13px;color:var(--muted)}.theme-control select{border-radius:8px;padding:7px 25px 7px 9px;min-height:40px}.rejected{opacity:1;border-left:3px solid var(--line);padding-left:12px}
+@media(max-width:650px){.header-actions{gap:8px}.theme-control{gap:4px;font-size:12px}.theme-control select{max-width:104px;padding:6px 20px 6px 7px}.site-header{padding:0 12px}.brand{font-size:14px}.text-button{font-size:10px}}
+@media print{:root,:root[data-theme=dark]{color-scheme:light;--bg:#fff;--paper:#fff;--ink:#111;--muted:#444;--green:#244c3e;--light:#f3f3f3;--line:#aaa;--orange:#713b20;--control:#fff;--note-bg:#fff;--note-ink:#111;background:#fff;color:#111}body,.note,.card,.card.tint{background:#fff!important;color:#111!important}textarea,input,select{color:#111!important;background:#fff!important}}
+@media(max-width:650px){.journey-card{grid-template-columns:42px 1fr}.journey-card .icon{font-size:18px;white-space:nowrap}}
+@media print{@page{size:A4;margin:16mm}:root{background:white;color:#111;font-size:11px}body{background:white}.site-header,.sidebar,footer,#notice,.no-print,.skip-link,noscript{display:none!important}.workspace{display:block;min-height:0}main{padding:0}.card{border:0;padding:0;margin:0;border-radius:0}.report-section{break-inside:avoid}h1{font-size:25px}.compare-scroll{overflow:visible;border-radius:0}.compare-table{min-width:0;font-size:10px;table-layout:fixed}.compare-table td,.compare-table th{padding:9px}.compare-table thead th{font-size:13px}.note{background:white;border:1px solid #aaa}.pill{border:1px solid #aaa;background:white}.pre-wrap,.line-list li{overflow-wrap:anywhere}.report-section h3{font-size:14px}}
+
+/* Buttons use their own foreground/background; green is reserved for emphasis text. */
+:root{--button:#244c3e;--button-ink:#ffffff;--button-hover:#173c2e;--boundary:#788478;--placeholder:#596a61}
+:root[data-theme=dark]{--button:#b6d7bf;--button-ink:#15231b;--button-hover:#d1e8d6;--boundary:#8c9e92;--placeholder:#bac8bf}
+.primary,.brand-mark,.active .step-num{background:var(--button);color:var(--button-ink)}.primary:hover{background:var(--button-hover)}
+textarea,input[type=text],select,.secondary,.radio-card,.step-num{border-color:var(--boundary)}textarea::placeholder{color:var(--placeholder);opacity:1}input[type=checkbox],input[type=radio]{accent-color:var(--button)}
+.skip-link{background:var(--paper);color:var(--ink)}select{font:inherit}.site-header{height:auto;min-height:100px;gap:16px;padding-top:15px;padding-bottom:15px;flex-wrap:wrap}.header-actions{flex-wrap:wrap}.theme-control select{max-width:none}.rejected{opacity:1}button:disabled{opacity:1;filter:grayscale(1);border:1px dashed var(--boundary)}
+@media(max-width:650px){.site-header{min-height:83px}.header-actions{width:100%;justify-content:space-between}.theme-control{font-size:13px}.theme-control select{max-width:none}.text-button{font-size:12px}}
+@media print{:root,:root[data-theme=dark]{color-scheme:light!important;--button:#244c3e;--button-ink:#fff;--button-hover:#173c2e;--boundary:#666;--placeholder:#444;--focus:#713b20;--error:#7e2b1c;--error-bg:#fff0e9;--success:#244a2e;--success-bg:#e6efdf}}
+.sidebar-note>span{color:var(--green)}
+
+</style>
+  <script>
+document.addEventListener('DOMContentLoaded', function () {
+/* 全部為流程示範內容；未經領域查核，不能作為招生或適配依據。 */
+globalThis.COACH_PATHS = [
+  {id:'software',major:'資訊工程',career:'軟體開發',learning:'示範：程式設計、問題拆解與軟體專題。',activity:'試著把生活中的一個小問題，拆成步驟並做成簡單網頁。',difference:'以邏輯與程式表達解法，透過測試逐步修正。',sourceName:null,sourceUrl:null,checkedAt:null,reviewer:null,uncertainties:'尚未查核。不同學校課程可能不同；本原型不提供招生條件、學費或適配結論。'},
+  {id:'design',major:'視覺傳達設計',career:'視覺設計',learning:'示範：視覺表達、版面設計與創作專題。',activity:'為同一個社團活動做兩版海報，詢問別人如何理解訊息。',difference:'以影像與版面傳達訊息，透過回饋調整表達。',sourceName:null,sourceUrl:null,checkedAt:null,reviewer:null,uncertainties:'尚未查核。不同學校課程可能不同；創作經驗不等於已證實適合該科系。'}
+];
+
+});
+</script>
+  <script>
+document.addEventListener('DOMContentLoaded', function () {
+/* 純狀態規則，與 DOM 分離，供瀏覽器及 Node 狀態測試使用。 */
+(function (root) {
+  'use strict';
+  const titles = ['投入的經驗', '做過的行動', '在意的考量'];
+  function create() {
+    return {step:0,answers:['','',''],summary:null,revision:0,confirmedRevision:null,comparisonRevision:null,candidate:{mode:'undecided',major:'',reason:'',recorded:false},candidateNeedsReview:false,questions:'',feedback:'',outputConfirmedRevision:null,contentRevision:0,error:'',failNext:false};
+  }
+  function invalidateOutput(s) {s.contentRevision++;s.outputConfirmedRevision=null;}
+  function invalidate(s) {
+    s.revision++;s.confirmedRevision=null;s.comparisonRevision=null;invalidateOutput(s);
+    if(s.candidate.recorded && s.candidate.mode==='candidate')s.candidateNeedsReview=true;
+  }
+  function answer(s,index,value) {
+    if(s.answers[index]===value)return;
+    s.answers[index]=value;s.summary=null;s.error='';invalidate(s);
+  }
+  function generate(s) {
+    invalidate(s);s.summary=null;
+    try {
+      if(s.failNext){s.failNext=false;throw new Error('示範整理失敗');}
+      const facts=s.answers.flatMap((text,index)=>text.trim()?[{id:`fact-${index}`,source:index,type:'自述',text,accepted:true}]:[]);
+      const hypotheses=facts.map(f=>({id:`inference-${f.source}`,source:f.source,type:'模擬推論',accepted:true,text:`從「${f.text}」這段自述，可能值得進一步探索其中讓你投入的原因；這不是已證實的能力。`}));
+      s.summary={facts,hypotheses};s.error='';s.step=2;return true;
+    } catch {s.error='整理未完成。你的回答已保留，請重試整理。';return false;}
+  }
+  function edit(s,id,value) {
+    const clue=[...s.summary.facts,...s.summary.hypotheses].find(c=>c.id===id);
+    if(!clue || clue.text===value)return;
+    clue.text=value;
+    if(clue.type==='自述')s.summary.hypotheses=s.summary.hypotheses.filter(c=>c.source!==clue.source);
+    invalidate(s);
+  }
+  function accept(s,id,accepted) {
+    const clue=[...s.summary.facts,...s.summary.hypotheses].find(c=>c.id===id);
+    if(!clue || clue.accepted===accepted)return;
+    clue.accepted=accepted;
+    if(clue.type==='自述'&&!accepted)s.summary.hypotheses.filter(c=>c.source===clue.source).forEach(c=>c.accepted=false);
+    invalidate(s);
+  }
+  function confirmed(s){return !!s.summary && s.confirmedRevision===s.revision && !s.error;}
+  function confirm(s){if(!s.summary || s.error)return false;s.confirmedRevision=s.revision;return true;}
+  function compare(s){if(!confirmed(s))return false;s.comparisonRevision=s.revision;return true;}
+  function clues(s){if(!confirmed(s))return [];return [...s.summary.facts,...s.summary.hypotheses].filter(c=>c.accepted&&c.text.trim());}
+  function candidate(s,key,value){if(s.candidate[key]===value)return;s.candidate[key]=value;s.candidate.recorded=false;invalidateOutput(s);}
+  function record(s){
+    if(!confirmed(s)||s.comparisonRevision!==s.revision)return false;
+    if(s.candidate.mode==='candidate'&&(!s.candidate.major.trim()||!s.candidate.reason.trim()))return false;
+    s.candidate.recorded=true;if(s.candidate.mode==='undecided')s.candidateNeedsReview=false;invalidateOutput(s);return true;
+  }
+  function ready(s){return confirmed(s)&&s.comparisonRevision===s.revision&&s.candidate.recorded&&!s.candidateNeedsReview;}
+  function confirmOutput(s){if(!ready(s))return false;s.outputConfirmedRevision=s.contentRevision;return true;}
+  function outputConfirmed(s){return ready(s)&&s.outputConfirmedRevision===s.contentRevision;}
+  function navigate(s,step){
+    if(step===2&&!s.summary)return false;
+    if(step>=3&&!confirmed(s))return false;
+    if(step===3&&!compare(s))return false;
+    if(step===4&&(!s.candidate.recorded||s.comparisonRevision!==s.revision))return false;
+    s.step=step;return true;
+  }
+  const api={titles,create,invalidateOutput,answer,generate,edit,accept,confirmed,confirm,compare,clues,candidate,record,ready,confirmOutput,outputConfirmed,navigate};
+  root.CoachState=api;
+  if(typeof module!=='undefined')module.exports=api;
+})(globalThis);
+
+});
+</script>
+  <script>
+document.addEventListener('DOMContentLoaded', function () {
+'use strict';
+const S=CoachState;
+let session=S.create();
+const view=document.querySelector('#view');
+const notice=document.querySelector('#notice');
+const steps=['開始探索','經驗提問','確認摘要','比較路徑','討論輸出'];
+const testMode=new URLSearchParams(location.search).get('test')==='1';
+function el(tag,text,className){const n=document.createElement(tag);if(text!==undefined)n.textContent=text;if(className)n.className=className;return n;}
+function button(text,fn,kind='primary'){const b=el('button',text,kind);b.type='button';b.addEventListener('click',fn);return b;}
+function say(text){notice.textContent=text;}
+function render(){
+  const nav=document.querySelector('#steps');nav.replaceChildren();
+  steps.forEach((name,i)=>{const b=button('',()=>go(i),'step'+(session.step===i?' active':''));b.append(el('span',String(i+1).padStart(2,'0'),'step-num'),el('span',name));if(session.step===i)b.setAttribute('aria-current','step');nav.append(b);});
+  view.replaceChildren();[home,experience,summary,comparison,output][session.step]();
+}
+function go(step){
+  if(!S.navigate(session,step)){say(step===4?'請先確認摘要、比較路徑並記錄候選狀態。':'請先整理並確認摘要，再繼續探索。');return;}
+  say('');render();document.querySelector('#main').focus();window.scrollTo({top:0,behavior:'instant'});
+}
+function heading(kicker,title,description){view.append(el('p',kicker,'page-kicker'),el('h1',title));if(description)view.append(el('p',description,'lede'));}
+function actions(parent,items){const a=el('div',undefined,'actions');a.append(...items);parent.append(a);return a;}
+function field(parent,label,value,onInput,{id,placeholder='',rows=3}={}){
+  const wrap=el('div',undefined,'field'),l=el('label',label),t=el('textarea');t.id=id;t.value=value;t.rows=rows;t.placeholder=placeholder;l.htmlFor=id;t.addEventListener('input',()=>onInput(t.value));wrap.append(l,t);parent.append(wrap);return t;
+}
+function home(){
+  const hero=el('section',undefined,'hero'),copy=el('div',undefined,'hero-copy');
+  copy.append(el('p','A LITTLE EXPLORATION, A LITTLE CLOSER','page-kicker'));
+  const h=el('h1');h.append(document.createTextNode('未來的方向，'),el('br'),el('em','從認識自己開始。'));
+  copy.append(h,el('p','還不知道想讀什麼科系？沒關係。\n從一段真實的經驗出發，一起找找你的興趣、線索，和下一個值得嘗試的可能。','lede pre-wrap'));
+  const start=button('',()=>go(1));start.setAttribute('aria-label','開始探索');start.append(document.createTextNode('開始探索'),el('span','↗','arrow'));copy.append(start,el('p','不需要標準答案，也不必現在就做決定。','subtle'));
+  const art=el('div',undefined,'hero-art');art.setAttribute('aria-hidden','true');art.append(el('div',undefined,'art-sun'),el('span','✳','art-star'),el('span','FIND YOUR OWN WAY','art-caption'),el('div',undefined,'art-hill'),el('div',undefined,'art-hill two'),el('div',undefined,'art-path'));hero.append(copy,art);view.append(hero);
+  const st=el('div',undefined,'small-title');st.append(el('h2','這段探索，我們會一起做'));view.append(st);
+  const grid=el('div',undefined,'journey-grid');[['01 /','回望一段經驗','從生活的小事，看見讓你投入的時刻。'],['02 /','整理自己的線索','修正與確認摘要，你最了解你自己。'],['03 /','看看可能的方向','比較路徑，留下你的理由或暫時未定。']].forEach(([icon,title,text])=>{const c=el('article',undefined,'journey-card');c.append(el('span',icon,'icon'),el('h3',title),el('p',text));grid.append(c);});view.append(grid);
+  const note=el('div',undefined,'note');note.append(el('strong','安心探索，先知道這些事'),el('p','這是規則式模擬，非真實 AI；示範資料尚未核定，不構成升學建議。沒有適配評分，完成流程也不代表已找到適合的科系。'),el('p','學生內容只存本次分頁記憶體，重新整理或關閉即清除，不傳送至外部服務。僅主題外觀偏好保存於目前瀏覽器，清除探索會保留主題。想留下成果，請列印／另存 PDF 並自行保存。'));view.append(note);
+}
+function experience(){
+  heading('STEP 01 / REFLECT','從一段經驗，慢慢說起。','不需要厲害的成就。一次社團活動、一份作業，或你花時間做的小事都可以；不知道也能略過。');
+  const card=el('section',undefined,'card');
+  const hints=['最近有什麼事情讓你投入，甚至忘記時間？','那時你實際做了什麼？遇到困難時怎麼回應？','這段經驗中，你最在意什麼？有什麼想繼續嘗試？'];
+  S.titles.forEach((title,i)=>{const q=el('div',undefined,'question'),head=el('div',undefined,'question-head'),l=el('label',`${i+1}. ${title}`);l.htmlFor=`answer-${i}`;head.append(l,button('略過',()=>{S.answer(session,i,'');render();document.querySelector(`#answer-${i}`).focus();say(`已略過「${title}」，你仍可繼續。`);},'text-button'));const t=el('textarea');t.id=`answer-${i}`;t.value=session.answers[i];t.placeholder=i===0?'例如：我幫社團做海報，反覆調整配色。':'寫下你的經驗，或先留白。';t.addEventListener('input',()=>S.answer(session,i,t.value));q.append(head,el('p',hints[i],'hint'),t);card.append(q);});
+  if(session.error){const err=el('div',session.error,'error');err.setAttribute('role','alert');card.append(err);}
+  actions(card,[button('返回開始',()=>go(0),'secondary'),button(session.error?'重試整理':'整理摘要',()=>{S.generate(session);say('');render();document.querySelector('#main').focus();})]);
+  if(testMode){const tools=el('div',undefined,'test-tools');tools.append(el('p','測試工具（只在 test=1 顯示）'),button('下次整理模擬失敗',()=>{session.failNext=true;say('已設定下次整理失敗，重試會恢復成功。');},'secondary'));card.append(tools);}
+  view.append(card);
+}
+function summary(){
+  heading('STEP 02 / UNDERSTAND','這些線索，像你嗎？','你可以修改內容，也可以取消採用不符合自己的線索。確認只是確認這份描述，不代表能力或適配度已獲證實。');
+  view.append(el('p','規則式模擬，非真實 AI · 推論尚待你確認','note'));
+  const status=el('p',S.confirmed(session)?'摘要已確認':'摘要待確認','status');view.append(status);
+  if(!session.summary.facts.length)view.append(el('p','資料不足：目前沒有具體經驗，沒有產生模擬推論。你仍可確認並查看一般示範比較。','card tint'));
+  [['學生自述',session.summary.facts],['模擬推論 · 尚未驗證',session.summary.hypotheses]].forEach(([title,list])=>{
+    const card=el('section',undefined,'card');card.append(el('h2',title));
+    if(!list.length)card.append(el('p','目前沒有內容。','subtle'));
+    list.forEach(c=>{const row=el('div',undefined,'clue'+(!c.accepted?' rejected':'')),label=el('label',`${S.titles[c.source]}・${c.type}`),t=el('textarea');t.id=c.id;label.htmlFor=c.id;t.value=c.text;
+      t.addEventListener('input',()=>{S.edit(session,c.id,t.value);status.textContent='摘要待確認';say('內容已修改，請重新確認摘要。既有候選需重看。');if(c.type==='自述')view.querySelectorAll(`[data-source="${c.source}"][data-inference]`).forEach(n=>n.remove());});
+      const checkLabel=el('label',undefined,'check-line'),check=el('input');check.type='checkbox';check.checked=c.accepted;check.setAttribute('aria-label',`採用 ${S.titles[c.source]} ${c.type}`);check.addEventListener('change',()=>{S.accept(session,c.id,check.checked);say('線索已更新，舊比較及成果已失效。');render();const target=view.querySelector(`#${c.id}`);if(target)target.focus();});checkLabel.append(check,document.createTextNode('採用這條線索（取消勾選表示否定）'));row.append(label,t,checkLabel,el('p',`來源：${S.titles[c.source]}；${c.type==='自述'?'由學生提供，可修正':'依自述產生的探索假設，尚未驗證'}`,'source-note'));row.dataset.source=c.source;if(c.type==='模擬推論')row.dataset.inference='true';card.append(row);});view.append(card);
+  });
+  actions(view,[button('返回經驗',()=>go(1),'secondary'),button('確認摘要',()=>{S.confirm(session);say('摘要已確認，接著看看不同路徑。');render();}),button('比較路徑',()=>go(3),'secondary')]);
+}
+function comparisonTable(parent){
+  const scroll=el('div',undefined,'compare-scroll');scroll.tabIndex=0;scroll.setAttribute('role','region');scroll.setAttribute('aria-label','示範路徑比較，可橫向捲動');const table=el('table',undefined,'compare-table'),caption=el('caption','示範路徑尚未核定，非升學建議');caption.className='subtle';table.append(caption);
+  const thead=el('thead'),hr=el('tr');['比較項目',...COACH_PATHS.map(p=>p.major)].forEach(name=>{const th=el('th',name);th.scope='col';hr.append(th);});thead.append(hr);table.append(thead);
+  const body=el('tbody');[['相關職業','career'],['學習內容','learning'],['可以先試試','activity'],['路徑差異','difference'],['不確定性','uncertainties']].forEach(([label,key])=>{const tr=el('tr');tr.append(el('td',label));COACH_PATHS.forEach(p=>tr.append(el('td',p[key])));body.append(tr);});
+  const sourceRow=el('tr');sourceRow.append(el('td','來源與查核'));COACH_PATHS.forEach(p=>{const td=el('td'),dl=el('dl');[['來源名稱',p.sourceName||'未提供（示範內容）'],['來源網址',p.sourceUrl||'未提供'],['查核日期',p.checkedAt||'未查核'],['查核責任角色',p.reviewer||'未提供']].forEach(([k,v])=>dl.append(el('dt',k),el('dd',v)));td.append(dl);sourceRow.append(td);});body.append(sourceRow);table.append(body);scroll.append(table);parent.append(scroll);
+}
+function comparison(){
+  heading('STEP 03 / EXPLORE','多看一點可能，再決定。','這裡沒有「最適合」的排名。先比較兩種方向，留意差異，再想想還有哪些問題值得查證。');
+  view.append(el('p','示範資料尚未核定 · 非升學建議 · 不包含完整入學條件、學費與地點','note'));
+  const card=el('section',undefined,'card tint');card.append(el('h3','你已確認、願意採用的個人線索'));
+  const clues=S.clues(session);if(!clues.length)card.append(el('p','沒有足夠的個人線索，以下只提供一般示範比較。'));
+  else{const ul=el('ul',undefined,'line-list');clues.forEach(c=>ul.append(el('li',`${c.type}：${c.text}`)));card.append(ul);}
+  card.append(el('p','個人線索與路徑資料分開呈現，不推定適合程度。','subtle'));view.append(card);comparisonTable(view);
+  const questionsArea=el('section',undefined,'card');
+  const questions=field(questionsArea,'待查問題',session.questions,value=>{session.questions=value;S.invalidateOutput(session);},{id:'questions',placeholder:'寫下你想進一步查證的問題，可先留白。'});
+  const examples=el('ol',undefined,'line-list');examples.id='questions-examples';
+  ['和師長討論前，可以準備哪些學習表現或成績資訊？','可以進一步查證哪些學校或科系資訊？','可以採取哪些下一步探索行動，例如詢問師長、參加體驗活動或了解補習等資源？'].forEach(text=>examples.append(el('li',text)));
+  const guidance=el('p','請查核官方來源及重要資訊。你可以帶著問題與師長討論，或自行選用 ChatGPT、Gemini 等外部 AI 協助整理；本產品不串接外部 AI，也不代為呼叫或傳送學生資料。請避免向外部服務提供姓名、學校、完整成績單等可識別或敏感個資。','note');guidance.id='questions-guidance';
+  questions.setAttribute('aria-describedby','questions-examples questions-guidance');
+  questionsArea.append(examples,guidance,el('p','未來付費版構想（尚未推出，內容與時間未定）：真人服務（職涯導師諮詢、學長姐經驗分享）；完整探索工具（多次探索與歷程整理、有來源的學校／科系比較、個人化行動計畫）。','subtle'));
+  view.append(questionsArea);
+  actions(view,[button('返回摘要',()=>go(2),'secondary'),button('保存待查問題',()=>say('待查問題已保留於本次探索，尚未查核。'),'secondary')]);
+  candidateForm(view);
+}
+function candidateForm(parent){
+  const card=el('section',undefined,'card');card.append(el('p','YOUR NEXT POSSIBILITY','eyebrow'),el('h2','把選擇權，留給自己。'),el('p','候選與理由由你來寫。只有「有興趣」也沒關係，可以先保留未定。','subtle'));
+  const fs=el('fieldset');fs.style.border='0';fs.style.padding='0';fs.style.margin='0';fs.append(el('legend','目前的候選狀態'));
+  [['candidate','記錄候選','寫下候選科系，與你自己的經驗有什麼關聯。'],['undecided','尚未形成候選','還需要一些探索，可以先帶著問題繼續。']].forEach(([value,title,desc])=>{const label=el('label',undefined,'radio-card'),radio=el('input');radio.type='radio';radio.name='mode';radio.value=value;radio.checked=session.candidate.mode===value;radio.addEventListener('change',()=>{S.candidate(session,'mode',value);render();document.querySelector(`input[value="${value}"]`).focus();});const text=el('span');text.append(el('strong',title),el('small',desc));label.append(radio,text);fs.append(label);});card.append(fs);
+  if(session.candidate.mode==='candidate'){
+    field(card,'候選科系',session.candidate.major,value=>S.candidate(session,'major',value),{id:'major',rows:1,placeholder:'由你自行填寫，不會自動選擇'});
+    field(card,'我的理由',session.candidate.reason,value=>S.candidate(session,'reason',value),{id:'reason',placeholder:'哪一段自己的經驗，讓你想進一步探索這個方向？'});
+  }
+  const error=el('p','','error');error.hidden=true;error.setAttribute('role','alert');card.append(error);
+  if(session.candidateNeedsReview){card.append(el('p','候選理由待重看：你的線索已修改。原文保留，請自行檢查是否仍成立。','note'));actions(card,[button('已重看並確認理由',()=>{session.candidateNeedsReview=false;S.invalidateOutput(session);say('已記錄你的重看確認，請再記錄候選狀態後確認輸出。');render();},'secondary')]);}
+  actions(card,[button('記錄並預覽討論輸出',()=>{if(!S.record(session)){error.hidden=false;error.textContent='請填寫候選科系及我的理由，或選擇「尚未形成候選」。';const first=!session.candidate.major.trim()?'major':'reason';const f=document.getElementById(first);if(f){f.setAttribute('aria-invalid','true');f.setAttribute('aria-describedby','candidate-error');error.id='candidate-error';f.focus();}return;}go(4);})]);parent.append(card);
+}
+function report(parent){
+  const report=el('article',undefined,'card');report.id='report';
+  report.append(el('p','MY EXPLORATION / 討論用摘要','eyebrow'),el('h2','我的探索，走到這裡。','output-heading'),el('p','規則式模擬，非真實 AI · 示範資料尚未核定 · 非升學建議','note'));
+  function section(title,text){const sec=el('section',undefined,'report-section');sec.append(el('h3',title));if(text!==undefined)sec.append(el('p',text,'pre-wrap'));report.append(sec);return sec;}
+  const facts=S.clues(session).filter(c=>c.type==='自述'),hyps=S.clues(session).filter(c=>c.type==='模擬推論');
+  section('01 / 已確認的學生自述',facts.length?facts.map(c=>c.text).join('\n\n'):'資料不足：沒有採用的自述。');
+  section('02 / 模擬推論（尚未驗證）',hyps.length?hyps.map(c=>c.text).join('\n\n'):'沒有採用的模擬推論。');
+  comparisonTable(section('03 / 路徑比較與來源'));
+  const candidate=section('04 / 目前的候選與個人理由');candidate.append(el('p',session.candidate.mode==='candidate'?`候選科系：${session.candidate.major}`:'尚未形成候選','pre-wrap'));if(session.candidate.mode==='candidate')candidate.append(el('p',session.candidate.reason,'pre-wrap'));
+  section('05 / 待查問題',session.questions||'尚未記錄待查問題。');
+  section('06 / 討論回饋（選填）',session.feedback||'尚未填寫，不影響本輪完成。');
+  const state=section('確認狀態');state.append(el('p',S.outputConfirmed(session)?'討論輸出已確認':'討論輸出待確認','output-state'),el('p','完成流程不等於已證實適合科系，也不代表價值研究已通過。資料只存本次分頁，重新整理或關閉即清除；列印檔案請自行保存。','subtle'));parent.append(report);
+}
+function syncOutput(){
+  const confirmed=S.outputConfirmed(session);document.querySelector('.output-state').textContent=confirmed?'討論輸出已確認':'討論輸出待確認';document.querySelector('#print').disabled=!confirmed;
+}
+function output(){
+  heading('STEP 04 / TAKE IT WITH YOU','帶著自己的想法，繼續聊聊。','可以和老師或家長一起討論。這份摘要由你確認，暫時沒有候選也能完成。');
+  const controls=el('section',undefined,'no-print');
+  if(session.candidateNeedsReview){controls.append(el('p','候選理由待重看，請返回比較檢查原文並明確確認。','error'));}
+  field(controls,'討論回饋（選填）',session.feedback,value=>{session.feedback=value;S.invalidateOutput(session);const old=document.querySelector('#report');if(old)old.remove();report(view);syncOutput();},{id:'feedback',placeholder:'可以先留白，之後再與老師或家長討論。'});
+  const print=button('列印／另存 PDF',()=>{if(S.outputConfirmed(session))window.print();},'secondary');print.id='print';print.disabled=!S.outputConfirmed(session);
+  actions(controls,[button('返回比較與候選',()=>go(3),'secondary'),button('確認討論輸出',()=>{if(!S.confirmOutput(session)){say('候選理由待重看，請返回比較檢查並確認。');return;}say('討論輸出已確認。可使用瀏覽器列印，選擇另存 PDF 並自行保存。');render();}),print]);controls.append(el('p','另存 PDF 需在瀏覽器列印視窗選擇；本應用不會自動下載或替你保存資料。','subtle'));view.append(controls);report(view);
+}
+document.querySelector('#clear').addEventListener('click',()=>{session=S.create();say('本次探索已清除。');render();document.querySelector('#main').focus();});
+const themeSelect=document.querySelector('#theme-select');
+if(window.CoachTheme){themeSelect.value=window.coachTheme.preference;themeSelect.addEventListener('change',()=>window.coachTheme.set(themeSelect.value));}
+render();
+
+});
+</script>
 </head>
 <body>
   <a class="skip-link" href="#main">跳到主要內容</a>
